@@ -7,7 +7,7 @@ export class Home extends React.Component {
             age: props.initialAge,
             status: 0,
             greeting: 'Default greeting',
-            homeLink: "changed link"
+            homeLink: props.initialLinkName
 
         }
 
@@ -16,6 +16,43 @@ export class Home extends React.Component {
                 status: 1
             })
         }, 3000)
+
+        console.log("Home Constructor")
+    }
+
+    // life cycle methods
+
+    componentWillMount() {
+        console.log("-------------- LIFE CYCLE: Component will Mount!")
+    }
+
+    componentDidMount() {
+        console.log('-------------- LIFE CYCLE: Component DID MOUNT!')
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log('-------------- LIFE CYCLE: Comp will receive props', nextProps)
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log('-------------- LIFE CYCLE: Should comp update?', nextProps, nextState)
+        // WARNING: this will block ALL state updates, not just status.
+        // if (nextState.status === 1)
+        //     return false
+
+        return true
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        console.log('-------------- LIFE CYCLE: Component WILL update', nextProps, nextState)
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log('-------------- LIFE CYCLE: Component DID update', prevProps, prevState)
+    }
+
+    componentWillUnmount() {
+        console.log('-------------- LIFE CYCLE: WARNING, component will unmount!')
     }
 
     onMakeOlder(e) {
@@ -41,6 +78,16 @@ export class Home extends React.Component {
         console.log(e)
     }
 
+    onHandleChange(event) {
+
+        this.setState({
+            homeLink: event.target.value
+        }, () => {
+            this.props.changeLinkName(event, this.state.homeLink)
+        })
+
+    }
+
     render() {
 
         return (
@@ -55,6 +102,7 @@ export class Home extends React.Component {
                 <hr/>
                 <button className="btn btn-primary" onClick={(e) => this.props.eventOnGreet(e, this.state.greeting)}>Greet!</button>
                 <hr/>
+                <input type="text" value={ this.state.homeLink } onChange={(e) => this.onHandleChange(e)}/>
                 <button className="btn btn-primary" onClick={(e) => this.onChangeLink(e) }>Change Header Link</button>
 
             </div>
@@ -65,5 +113,6 @@ export class Home extends React.Component {
 Home.propTypes = {
     name: React.PropTypes.string,
     age: React.PropTypes.number,
-    eventOnGreet: React.PropTypes.func
+    eventOnGreet: React.PropTypes.func,
+    initialLinkName: React.PropTypes.string
 }
