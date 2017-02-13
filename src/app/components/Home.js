@@ -92,19 +92,7 @@ export class Home extends React.Component {
 
         return (
             <div>
-                <p>In a new component!</p>
-
-                <p>Your name is {this.props.name}, your age is { this.state.age } </p>
-                <p>Status: {this.state.status}</p>
-                <hr/>
-                <button className="btn btn-primary" onClick={this.onMakeOlder.bind(this)}>Make me older!</button>
-                <button className="btn btn-primary" onClick={(e) => this.onMakeYounger(e)}>Make me younger!</button>
-                <hr/>
-                <button className="btn btn-primary" onClick={(e) => this.props.eventOnGreet(e, this.state.greeting)}>Greet!</button>
-                <hr/>
-                <input type="text" value={ this.state.homeLink } onChange={(e) => this.onHandleChange(e)}/>
-                <button className="btn btn-primary" onClick={(e) => this.onChangeLink(e) }>Change Header Link</button>
-
+                <h3>Home</h3>
             </div>
         )
     }

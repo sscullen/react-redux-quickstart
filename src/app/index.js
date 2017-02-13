@@ -1,8 +1,8 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-import { Header } from './components/Header'
 import { Home } from './components/Home'
+import { Root } from './components/Root'
 
 class App extends React.Component {
     constructor(props) {
@@ -46,24 +46,11 @@ class App extends React.Component {
         }
 
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col-xs-10 col-xs-offset-1">
-                        <Header homeLink={this.state.homeLink} otherLink={34} />
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-xs-10 col-xs-offset-1">
-                        { homeComp }
 
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-xs-10 col-xs-offset-1">
-                        <button className="btn btn-primary" onClick={this.onChangeHomeMounted.bind(this)}>(un) mount Home Component</button>
-                    </div>
-                </div>
-            </div>
+            <Root>
+                <Home></Home>
+            </Root>
+
         );
     }
 }
