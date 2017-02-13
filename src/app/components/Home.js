@@ -5,7 +5,8 @@ export class Home extends React.Component {
         super()
         this.state = {
             age: props.initialAge,
-            status: 0
+            status: 0,
+            greeting: 'Default greeting'
         }
 
         setTimeout(() => {
@@ -44,7 +45,8 @@ export class Home extends React.Component {
                 <hr/>
                 <button className="btn btn-primary" onClick={this.onMakeOlder.bind(this)}>Make me older!</button>
                 <button className="btn btn-primary" onClick={(e) => this.onMakeYounger(e)}>Make me younger!</button>
-
+                <hr/>
+                <button className="btn btn-primary" onClick={(e) => this.props.eventOnGreet(e, this.state.greeting)}>Greet!</button>
             </div>
         )
     }
@@ -53,4 +55,5 @@ export class Home extends React.Component {
 Home.propTypes = {
     name: React.PropTypes.string,
     age: React.PropTypes.number,
+    eventOnGreet: React.PropTypes.func
 }
