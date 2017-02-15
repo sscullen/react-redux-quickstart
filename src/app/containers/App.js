@@ -6,13 +6,15 @@ import { connect } from 'react-redux'
 import { User } from '../components/User'
 import { Main } from '../components/Main'
 
+// import redux actions for convience
+import { setName } from '../actions/userActions'
+
 // to finish the connection between Redux and React, you do not export the component directly
 // you must pass your component to the function returned by connect method and export that
 class App extends React.Component {
 
 
     render() {
-
         return (
             <div className="container">
                 <Main changeUsername={() => this.props.setName('MICHALE')}/>
@@ -25,8 +27,8 @@ class App extends React.Component {
 // this map props directly to the names given when reducers are combined with combineReducers func
 const mapStateToProps = (state) => {
     return {
-        user: state.userReducer,
-        math: state.mathReducer
+        user: state.user,
+        math: state.math
     };
 };
 
@@ -34,10 +36,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         setName: (name) => {
-            dispatch({
-                type: 'SET_NAME',
-                payload: name
-            })
+            dispatch(setName(name))
         }
     };
 };
