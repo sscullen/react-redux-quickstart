@@ -33,8 +33,8 @@
 //
 // render(<App/>, window.document.getElementById("app"));
 
-import { createStore, combineReducers } from 'redux'
-
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import logger from 'redux-logger'
 
 // ES6 default values for function parameters
 const mathReducer = (state = {
@@ -44,7 +44,6 @@ const mathReducer = (state = {
 
     switch(action.type) {
         case 'ADD':
-            console.log('ADD action triggered')
             // make sure to create a new state and update your state properties in an immutable way
             // otherwise redux will not work
             state = {
@@ -55,7 +54,6 @@ const mathReducer = (state = {
 
             break;
         case 'SUBTRACT':
-            console.log('SUBTRACT action triggered')
             state = {
                 ...state,
                 result: state.result - action.payload,
@@ -78,7 +76,6 @@ const userReducer = (state = {
 
     switch(action.type) {
         case 'SET_NAME':
-            console.log('SET_NAME action triggered')
             // make sure to create a new state and update your state properties in an immutable way
             // otherwise redux will not work
             state = {
@@ -88,7 +85,6 @@ const userReducer = (state = {
 
             break;
         case 'SET_AGE':
-            console.log('SET_AGE action triggered')
             state = {
                 ...state,
                age: action.payload
@@ -105,14 +101,30 @@ const userReducer = (state = {
 // multiple reducers combined into one reducer
 // the store will only accept one reducer so you use combineReducers to join multiple ones together
 
+// myLogger middleware, middle ware sits between the action and the reducer on the REDUX flow diagram
+// function (store) { return function (next) { return function(action) {}}}
+// it looks super confusing but just remember how fat arrow funcs in ES6 implicitly return the
+// thing directly after the arrow
+const myLogger = (store) => (next) => (action) => {
+    console.log("Logged action: ", action)
+    // need to call next(action) to allow the action to pass to the reducer
+    next(action)
+}
 
-const store = createStore(combineReducers({
-    mathReducer,
-    userReducer
-}));
+
+const store = createStore(
+    combineReducers({
+        mathReducer,
+        userReducer
+    }),
+    {},
+    applyMiddleware(logger())
+);
+// RE: above, some middleware can be passed as the function directly, redux-logger has afunction that has to run
+// in order to return the chained functions that allow middleware to work
 
 store.subscribe(() => {
-    console.log('Store updated', store.getState())
+    //console.log('Store updated', store.getState())
 })
 
 // action is a type and payload
