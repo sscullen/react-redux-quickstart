@@ -1,8 +1,11 @@
 // required functions to initialize REDUX
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 // Logging middleware for redux
-import logger from "redux-logger"
-
+import logger from 'redux-logger'
+// thunk is used for async actions in redux
+import thunk from 'redux-thunk'
+// redux-promise-middleware enables support for promises in async actions
+import promise from 'redux-promise-middleware'
 // import your reducers
 import math from './reducers/mathReducer'
 import user from './reducers/userReducer'
@@ -35,5 +38,5 @@ export default createStore(
         user
     }),
     {},
-    applyMiddleware(logger())
+    applyMiddleware(logger(), thunk, promise())
 );
