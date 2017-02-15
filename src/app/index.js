@@ -35,15 +35,34 @@
 
 import { createStore } from 'redux'
 
-const reducer = (state, action) => {
+const initialState = {
+    result: 1,
+    lastValues: []
+}
+
+// ES6 default values for function parameters
+const reducer = (state = initialState, action) => {
+
     switch(action.type) {
         case 'ADD':
             console.log('ADD action triggered')
-            state = state + action.payload
+            // make sure to create a new state and update your state properties in an immutable way
+            // otherwise redux will not work
+            state = {
+                ...state,
+                result: state.result + action.payload,
+                lastValues: [...state.lastValues, action.payload]
+            }
+
             break;
         case 'SUBTRACT':
             console.log('SUBTRACT action triggered')
-            state = state - action.payload
+            state = {
+                ...state,
+                result: state.result - action.payload,
+                lastValues: [...state.lastValues, action.payload]
+            }
+
             break;
         default:
             break;
@@ -52,7 +71,7 @@ const reducer = (state, action) => {
     return state
 };
 
-const store = createStore(reducer, 1);
+const store = createStore(reducer);
 
 store.subscribe(() => {
     console.log('Store updated', store.getState())
