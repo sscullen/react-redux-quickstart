@@ -1,30 +1,75 @@
-import React from 'react'
-import { render } from 'react-dom'
-import { Router, Route, browserHistory, IndexRoute } from 'react-router'
+// import React from 'react'
+// import { render } from 'react-dom'
+//
+// import { User } from './components/User'
+// import { Main } from './components/Main'
+//
+// class App extends React.Component {
+//
+//     constructor () {
+//         super()
+//
+//         this.state = {
+//             username: 'Max'
+//         }
+//     }
+//
+//     changeUsername(newName) {
+//         this.setState({
+//             username: newName
+//         })
+//     }
+//
+//     render() {
+//
+//         return (
+//             <div className="container">
+//                 <Main changeUsername={this.changeUsername.bind(this)}/>
+//                 <User username={this.state.username}/>
+//             </div>
+//         )
+//     }
+// }
+//
+// render(<App/>, window.document.getElementById("app"));
 
-import { Home } from './components/Home'
-import { Root } from './components/Root'
-import { User } from './components/User'
+import { createStore } from 'redux'
 
-class App extends React.Component {
-
-    render() {
-
-        return (
-            // use browserHistory to make the browser handle requests for example.com/user instead of server
-            <Router history={browserHistory}>
-                <Route path={"/"} component={Root}>
-                    {/*set up the default route*/}
-                    <IndexRoute component={Home}/>
-                    {/*to use sub routes, use the child property the parent component*/}
-                     {/*each sub route is added as a child to the parent route*/}
-                    <Route path={"user/:id"} component={User} cssClass="dark"/>
-                    <Route path={"home"} component={Home}/>
-                </Route>
-                <Route path={"home-standalone"} component={Home}/>
-            </Router>
-        );
+const reducer = (state, action) => {
+    switch(action.type) {
+        case 'ADD':
+            console.log('ADD action triggered')
+            state = state + action.payload
+            break;
+        case 'SUBTRACT':
+            console.log('SUBTRACT action triggered')
+            state = state - action.payload
+            break;
+        default:
+            break;
     }
-}
 
-render(<App/>, window.document.getElementById("app"));
+    return state
+};
+
+const store = createStore(reducer, 1);
+
+store.subscribe(() => {
+    console.log('Store updated', store.getState())
+})
+
+// action is a type and payload
+store.dispatch({
+    type: 'ADD',
+    payload: 100
+});
+
+store.dispatch({
+    type: 'ADD',
+    payload: 100
+});
+
+store.dispatch({
+    type: 'SUBTRACT',
+    payload: 99
+});
