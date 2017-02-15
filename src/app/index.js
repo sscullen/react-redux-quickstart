@@ -18,7 +18,7 @@ class App extends React.Component {
                     <IndexRoute component={Home}/>
                     {/*to use sub routes, use the child property the parent component*/}
                      {/*each sub route is added as a child to the parent route*/}
-                    <Route path={"user/:id"} component={User}/>
+                    <Route path={"user/:id"} component={User} cssClass="dark"/>
                     <Route path={"home"} component={Home}/>
                 </Route>
                 <Route path={"home-standalone"} component={Home}/>
