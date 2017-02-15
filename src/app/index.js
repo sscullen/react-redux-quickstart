@@ -6,7 +6,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import logger from 'redux-logger'
 import { Provider } from 'react-redux'
 
-import  App from './components/App'
+import  App from './containers/App'
 
 
 // ES6 default values for function parameters

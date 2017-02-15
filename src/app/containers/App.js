@@ -3,8 +3,8 @@ import React from 'react'
 // react-redux critcal function
 import { connect } from 'react-redux'
 
-import { User } from './User'
-import { Main } from './Main'
+import { User } from '../components/User'
+import { Main } from '../components/Main'
 
 // to finish the connection between Redux and React, you do not export the component directly
 // you must pass your component to the function returned by connect method and export that
