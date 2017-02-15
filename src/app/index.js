@@ -33,15 +33,14 @@
 //
 // render(<App/>, window.document.getElementById("app"));
 
-import { createStore } from 'redux'
+import { createStore, combineReducers } from 'redux'
 
-const initialState = {
-    result: 1,
-    lastValues: []
-}
 
 // ES6 default values for function parameters
-const reducer = (state = initialState, action) => {
+const mathReducer = (state = {
+    result: 1,
+    lastValues: []
+}, action) => {
 
     switch(action.type) {
         case 'ADD':
@@ -71,7 +70,46 @@ const reducer = (state = initialState, action) => {
     return state
 };
 
-const store = createStore(reducer);
+// ES6 default values for function parameters
+const userReducer = (state = {
+    name: "Shaun",
+    age: 31
+}, action) => {
+
+    switch(action.type) {
+        case 'SET_NAME':
+            console.log('SET_NAME action triggered')
+            // make sure to create a new state and update your state properties in an immutable way
+            // otherwise redux will not work
+            state = {
+                ...state,
+                name: action.payload
+            }
+
+            break;
+        case 'SET_AGE':
+            console.log('SET_AGE action triggered')
+            state = {
+                ...state,
+               age: action.payload
+            }
+
+            break;
+        default:
+            break;
+    }
+
+    return state
+};
+
+// multiple reducers combined into one reducer
+// the store will only accept one reducer so you use combineReducers to join multiple ones together
+
+
+const store = createStore(combineReducers({
+    mathReducer,
+    userReducer
+}));
 
 store.subscribe(() => {
     console.log('Store updated', store.getState())
@@ -91,4 +129,14 @@ store.dispatch({
 store.dispatch({
     type: 'SUBTRACT',
     payload: 99
+});
+
+store.dispatch({
+    type: 'SET_AGE',
+    payload: 99
+});
+
+store.dispatch({
+    type: 'SET_NAME',
+    payload: 'Max'
 });
