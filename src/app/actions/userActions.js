@@ -31,6 +31,11 @@ export function setName(name) {
 export function setAge(age) {
     return {
         type: 'USER_SET_AGE',
-        payload: age
+        payload: new Promise((resolve, reject) => {
+            setTimeout(() => {
+
+                resolve(age)
+            }, 4000)
+        })
     }
 }
